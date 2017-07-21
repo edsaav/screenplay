@@ -111,7 +111,8 @@ def is_parenthetical(line):
     return False
 
 def is_page(line):
-    regex = re.compile('pg\.')
+    regex = re.compile('pg\.|^\s{20,200}[1-9]')
+    # regex = re.compile('^\s+[1-9]')
     if regex.search(line):
         return True
     return False
