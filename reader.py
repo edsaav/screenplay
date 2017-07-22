@@ -12,9 +12,12 @@ def script_files():
             sf.append(os.path.join(SCRIPTS_FOLDER, filename))
     return sf
 
-# for s in script_files():
-#     f = film.Film(s)
-#     print f.stats()
-
 for s in script_files():
-    print s
+    try:
+        f = film.Film(s)
+        print f.stats()
+    except IndexError:
+        print 'Bad script error: ' + s
+
+# for s in script_files():
+#     print s
