@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import requests
 import re
 from string import ascii_uppercase
+import csv
 
 BASE_URL = 'http://www.boxofficemojo.com/movies/alphabetical.htm'
 
@@ -11,8 +12,28 @@ class BoxOfficeMojo(object):
     def __init__(self):
         self.links = []
         self.listing_links = self.__get_listing_links()
-        page_links = self.__get_movie_links(BASE_URL)
-        self.links.extend(page_links)
+        # page_links = self.__get_movie_links(BASE_URL)
+        # self.links.extend(page_links)
+
+    def scrape(self):
+        with open('bom2.csv','w') as datafile:
+            fieldnames = ['title', 'genre', 'runtime', 'release', 'domestic']
+            writer = csv.DictWriter(datafile, fieldnames=fieldnames)
+            tracker = 0
+            failures = 0
+
+            writer.writeheader()
+            for l in self.links[1593:]:
+                try:
+                    writer.writerow(self.__scrape_film_page(l))
+                    tracker += 1
+                    if tracker >= 50:
+                        tracker = 0
+                        print '50 more pages scraped'
+                except:
+                    print "Failed to scrape " + l
+                    failures += 1
+            print "Finished with " + failures + " failures."
 
     def collect_movie_links(self):
         for l in self.listing_links:
@@ -64,3 +85,11 @@ class BoxOfficeMojo(object):
             domestic = 'Unknown'
 
         return { 'title':title, 'genre':genre, 'runtime':runtime, 'release':release, 'domestic':domestic }
+
+print 'Collecting listing links...'
+bom = BoxOfficeMojo()
+print 'Scraper instantiated...'
+bom.collect_movie_links()
+print 'Movie detail page links collected...'
+bom.scrape()
+print 'Success!'
