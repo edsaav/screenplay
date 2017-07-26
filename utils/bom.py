@@ -14,6 +14,10 @@ class BoxOfficeMojo(object):
         page_links = self.__get_movie_links(BASE_URL)
         self.links.extend(page_links)
 
+    def collect_movie_links(self):
+        for l in self.listing_links:
+            self.links.extend(self.__get_movie_links(l))
+
     def __get_movie_links(self,url):
         html = requests.get(url).text
         soup = BeautifulSoup(html, 'html5lib')
@@ -43,3 +47,16 @@ class BoxOfficeMojo(object):
             for l in self.__alpha_sub_links(base_link):
                 links.append('http://www.boxofficemojo.com' + l)
         return links
+
+
+def scrape_film_page(url):
+    html = requests.get(url).text
+    soup = BeautifulSoup(html, 'html5lib')
+
+    title = soup.find_all(face='Verdana')[1].b.text
+    print title
+
+scrape_film_page('http://www.boxofficemojo.com/movies/?id=zulu.htm')
+# test = BoxOfficeMojo()
+# test.collect_movie_links()
+# print test.links
