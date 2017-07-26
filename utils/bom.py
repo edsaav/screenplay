@@ -48,15 +48,19 @@ class BoxOfficeMojo(object):
                 links.append('http://www.boxofficemojo.com' + l)
         return links
 
+    def __scrape_film_page(self,url):
+        '''Requires a Box Office Mojo url leading to the detail page of a film.
+        '''
+        html = requests.get(url).text
+        soup = BeautifulSoup(html, 'html5lib')
 
-def scrape_film_page(url):
-    html = requests.get(url).text
-    soup = BeautifulSoup(html, 'html5lib')
+        title = soup.find_all(face='Verdana')[1].b.text
+        genre = soup.find_all(string=re.compile('Genre'))[1].find_next_sibling().text
+        runtime = soup.find_all(string=re.compile('Runtime'))[0].find_next_sibling().text
+        release = soup.find_all(string=re.compile('Release Date'))[0].find_next_sibling().text
+        try:
+            domestic = soup.find_all(string=re.compile('Domestic Total Gross'))[0].find_next_sibling().text
+        except IndexError:
+            domestic = 'Unknown'
 
-    title = soup.find_all(face='Verdana')[1].b.text
-    print title
-
-scrape_film_page('http://www.boxofficemojo.com/movies/?id=zulu.htm')
-# test = BoxOfficeMojo()
-# test.collect_movie_links()
-# print test.links
+        return { 'title':title, 'genre':genre, 'runtime':runtime, 'release':release, 'domestic':domestic }
