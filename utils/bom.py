@@ -10,6 +10,7 @@ class BoxOfficeMojo(object):
 
     def __init__(self):
         self.links = []
+        self.listing_links = self.__get_listing_links()
         page_links = self.__get_movie_links(BASE_URL)
         self.links.extend(page_links)
 
@@ -34,13 +35,11 @@ class BoxOfficeMojo(object):
             links.append(l['href'])
         return links
 
-    def __listing_links(self):
-        return False
-        # declare empty listings array
-        # for each letter and include symbol page:
-        #     add this page to the listings array
-        #     if there is a <div class='alpha-nav-holder'>
-        #         add all of those links to the listings array as well
-        # return the listings array
-
-print test_alpha_sub_links('http://www.boxofficemojo.com/movies/alphabetical.htm?letter=A&p=.htm')
+    def __get_listing_links(self):
+        links = []
+        for c in ascii_uppercase:
+            base_link = 'http://www.boxofficemojo.com/movies/alphabetical.htm?letter=' + c + '&p=.htm'
+            links.append(base_link)
+            for l in self.__alpha_sub_links(base_link):
+                links.append('http://www.boxofficemojo.com' + l)
+        return links
