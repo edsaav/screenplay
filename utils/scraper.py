@@ -44,5 +44,5 @@ class Scraper(object):
 
 #get_imsdb_links('http://www.imsdb.com/alphabetical/A')
 s = Scraper()
-for n in range(15,100):
+for n in range(101,len(s.links)):
     s.capture(s.links[n])
