@@ -9,14 +9,17 @@ with open('full_data_set.csv','rb') as f:
     reader = csv.reader(f)
     for r in reader:
         try:
-            data_points = [float(r[1]),float(r[2]),float(r[3]),float(r[4]),float(r[5])]
+            data_points = [float(r[2]),float(r[3]),float(r[4]),float(r[5])]
             data.append(data_points)
-            results.append(float(r[8]))
+            if float(r[8]) >= 5000000:
+                results.append(0)
+            else:
+                results.append(1)
         except:
             print 'Header line'
 
 features = [tf.contrib.layers.real_valued_column('x', dimension=2)]
-estimator = tf.contrib.learn.LinearRegressor(feature_columns=features)
+estimator = tf.contrib.learn.LinearClassifier(feature_columns=features)
 
 x_train = np.array(data[:300])
 y_train = np.array(results[:300])
@@ -30,7 +33,11 @@ eval_input_fn = tf.contrib.learn.io.numpy_input_fn(
 
 estimator.fit(input_fn=input_fn, steps=1000)
 
-train_loss = estimator.evaluate(input_fn=input_fn)
-eval_loss = estimator.evaluate(input_fn=eval_input_fn)
-print("train loss: %r"% train_loss)
-print("eval loss: %r"% eval_loss)
+# train_loss = estimator.evaluate(input_fn=input_fn)
+# eval_loss = estimator.evaluate(input_fn=eval_input_fn)
+
+accuracy_score = estimator.evaluate(input_fn=input_fn, steps=1)['accuracy']
+# print("train loss: %r"% train_loss)
+# print("eval loss: %r"% eval_loss)
+
+print "Accuracy Score: %r"% accuracy_score
