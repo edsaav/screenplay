@@ -9,7 +9,7 @@ with open('full_data_set.csv','rb') as f:
     reader = csv.reader(f)
     for r in reader:
         try:
-            data_points = [float(r[2]),float(r[3]),float(r[4]),float(r[5])]
+            data_points = [float(r[1]),float(r[2]),float(r[3]),float(r[4]),float(r[5])]
             data.append(data_points)
             if float(r[8]) >= 5000000:
                 results.append(0)
@@ -33,11 +33,6 @@ eval_input_fn = tf.contrib.learn.io.numpy_input_fn(
 
 estimator.fit(input_fn=input_fn, steps=1000)
 
-# train_loss = estimator.evaluate(input_fn=input_fn)
-# eval_loss = estimator.evaluate(input_fn=eval_input_fn)
-
 accuracy_score = estimator.evaluate(input_fn=input_fn, steps=1)['accuracy']
-# print("train loss: %r"% train_loss)
-# print("eval loss: %r"% eval_loss)
 
 print "Accuracy Score: %r"% accuracy_score
