@@ -1,0 +1,23 @@
+1501464468.23 : Dialogue Ratio : 0.77
+1501464684.34 : Dialogue Ratio : 0.76
+1501464749.16 : Dialogue Ratio : 0.783333
+1501464783.65 : Dialogue Ratio : 0.733333
+1501464853.18 : Parenthetical Ratio : 0.74
+1501465419.3 : Parenthetical Ratio : 0.716667
+1501465437.26 : Parenthetical Ratio : 0.75
+1501465467.28 : Words per Line : 0.77
+1501465478.67 : Words per Line : 0.776667
+1501465514.28 : Words per Line : 0.72
+1501465555.84 : Words per Line : 0.74
+1501465760.96 : Dialogue Sentiment : 0.763333
+1501465773.28 : Dialogue Sentiment : 0.7
+1501465785.66 : Dialogue Sentiment : 0.733333
+1501465797.64 : Dialogue Sentiment : 0.7
+1501465808.68 : Dialogue Sentiment : 0.713333
+1501465862.19 : Number of Scenes : 0.766667
+1501465874.89 : Number of Scenes : 0.74
+1501465886.99 : Number of Scenes : 0.793333
+1501465913.1 : Number of Scenes : 0.743333
+1501466752.67 : Dialogue Ratio : 0.723333 : dnn_classify
+1501466791.75 : Dialogue Ratio : 0.753333 : dnn_classify
+1501466808.51 : Dialogue Ratio : 0.733333 : dnn_classify
